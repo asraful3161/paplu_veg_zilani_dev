@@ -14,7 +14,7 @@
 /* I will thankful if you could help me translating this file to your language and email me at saleem@tecdiary.com */
 
 #Header
-$lang['all']						= "All",
+$lang['all']						= "All";
 $lang['pos_module'] 				= "POS Module";
 $lang['cat_limit'] 					= "Display Categories";
 $lang['pro_limit'] 					= "Display Products";

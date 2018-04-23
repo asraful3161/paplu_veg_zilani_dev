@@ -46,7 +46,7 @@ class Discount extends MX_Controller
         $data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
         $data['success_message'] = $this->session->flashdata('success_message');
 
-        $data['customer_discounts'] = $this->discount_model->getAllCustomerDiscounts();
+        $data['customer_discounts'] = $this->discount_model->getAllCustomerDiscounts()?$this->discount_model->getAllCustomerDiscounts():[];
 
         //print_r($data['customer_discounts']); exit;  
 
@@ -302,7 +302,7 @@ class Discount extends MX_Controller
         $data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
         $data['success_message'] = $this->session->flashdata('success_message');
 
-        $data['customer_balance'] = $this->discount_model->getAllCustomerBalance();
+        $data['customer_balance'] = $this->discount_model->getAllCustomerBalance()?$this->discount_model->getAllCustomerBalance():[];
 
         //print_r($data['customer_balance']); exit;   
 
@@ -412,7 +412,7 @@ class Discount extends MX_Controller
         //$data['customerData']=$this->discount_model->getCustomerInfoByID(12);
         //print_r($data['customerData']); exit; 
 
-        $data['customer_transavtion_history'] = $this->discount_model->getTransactionHistory();
+        $data['customer_transavtion_history'] = $this->discount_model->getTransactionHistory()?$this->discount_model->getTransactionHistory():[];
         // echo "<pre>"; print_r($data['customer_transavtion_history']); exit; 
 
         $this->session->set_flashdata('success_message', 'Balance successfully updated');

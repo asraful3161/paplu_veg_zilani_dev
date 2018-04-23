@@ -66,7 +66,8 @@ $(function () {
 </script>
 <div class="btn-group pull-right" style="margin-left: 25px;">
 <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-<?php $links = '';
+<?php 	$links = '';
+		$wh_name='';
 	foreach($warehouses as $warehouse) {
 		if($warehouse->id == $warehouse_id) {
 			$wh_name = $warehouse->name;

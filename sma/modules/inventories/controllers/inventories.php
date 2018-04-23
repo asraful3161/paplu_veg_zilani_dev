@@ -488,9 +488,9 @@ function pdf()
 			);
 			
 					
-	   $data['suppliers'] = $this->inventories_model->getAllSuppliers();
+	   $data['suppliers'] = $this->inventories_model->getAllSuppliers()?$this->inventories_model->getAllSuppliers():[];
 	   $data['tax_rates'] = $this->inventories_model->getAllTaxRates();
-	   $data['warehouses'] = $this->inventories_model->getAllWarehouses();
+	   $data['warehouses'] = $this->inventories_model->getAllWarehouses()?$this->inventories_model->getAllWarehouses():[];
 	   $data['rnumber'] = $this->inventories_model->getNextAI();
       $meta['page_title'] = 'Ass Stock';
       $data['page_title'] = 'Ass Stock';
@@ -842,9 +842,9 @@ function pdf()
 			);
 			
 		//$data['items'] = $items;			
-	   $data['suppliers'] = $this->inventories_model->getAllSuppliers();
+	   $data['suppliers'] = $this->inventories_model->getAllSuppliers()?$this->inventories_model->getAllSuppliers():[];
 	   $data['products'] = $this->inventories_model->getAllProducts();
-	   $data['warehouses'] = $this->inventories_model->getAllWarehouses();
+	   $data['warehouses'] = $this->inventories_model->getAllWarehouses()?$this->inventories_model->getAllWarehouses():[];
 	   $data['rnumber'] = $this->inventories_model->getNextAI();
 	   
       $meta['page_title'] = 'Add Stock';

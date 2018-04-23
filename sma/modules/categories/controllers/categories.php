@@ -278,7 +278,7 @@ class Categories extends MX_Controller {
 				'value' => $this->form_validation->set_value('code'),
 			);
 			
-		$data['categories'] = $this->categories_model->getAllCategories();
+		$data['categories'] = $this->categories_model->getAllCategories()?$this->categories_model->getAllCategories():[];
 		$meta['page_title'] = $this->lang->line("new_subcategory");
 		$data['page_title'] = $this->lang->line("new_subcategory");
 		$this->load->view('commons/header', $meta);

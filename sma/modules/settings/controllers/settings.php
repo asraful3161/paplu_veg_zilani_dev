@@ -142,9 +142,9 @@ class Settings extends MX_Controller {
 	   $data['success_message'] = $this->session->flashdata('success_message');
 	   
 	   $data['settings'] = $this->settings_model->getSettings();
-	   $data['tax_rates'] = $this->settings_model->getAllTaxRates();
-	   $data['discounts'] = $this->settings_model->getAllDiscounts();
-	   $data['warehouses'] = $this->settings_model->getAllWarehouses(); 
+	   $data['tax_rates'] = $this->settings_model->getAllTaxRates()?$this->settings_model->getAllTaxRates():[];
+	   $data['discounts'] = $this->settings_model->getAllDiscounts()?$this->settings_model->getAllDiscounts():[];
+	   $data['warehouses'] = $this->settings_model->getAllWarehouses()?$this->settings_model->getAllWarehouses():[]; 
 	   $data['date_formats'] = $this->settings_model->getDateFormats();
 	   
       $meta['page_title'] = $this->lang->line('system_setting');
@@ -160,7 +160,7 @@ class Settings extends MX_Controller {
 	   $data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 	   $data['success_message'] = $this->session->flashdata('success_message');
 	   
-	   $data['tax_rates'] = $this->settings_model->getAllTaxRates(); 
+	   $data['tax_rates'] = $this->settings_model->getAllTaxRates()?$this->settings_model->getAllTaxRates():[]; 
 	   
       $meta['page_title'] = $this->lang->line('tax_rates');
 	  $data['page_title'] = $this->lang->line('tax_rates');
@@ -570,7 +570,7 @@ class Settings extends MX_Controller {
 	   $data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 	   $data['success_message'] = $this->session->flashdata('success_message');
 	   
-	   $data['warehouses'] = $this->settings_model->getAllWarehouses(); 
+	   $data['warehouses'] = $this->settings_model->getAllWarehouses()?$this->settings_model->getAllWarehouses():[]; 
 	   
       $meta['page_title'] = $this->lang->line('warehouses');
 	  $data['page_title'] = $this->lang->line('warehouses');
@@ -712,7 +712,7 @@ class Settings extends MX_Controller {
 	   $data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 	   $data['success_message'] = $this->session->flashdata('success_message');
 	   
-	   $data['discounts'] = $this->settings_model->getAllDiscounts(); 
+	   $data['discounts'] = $this->settings_model->getAllDiscounts()?$this->settings_model->getAllDiscounts():[]; 
 	   
       $meta['page_title'] = $this->lang->line('discounts');
 	  $data['page_title'] = $this->lang->line('discounts');

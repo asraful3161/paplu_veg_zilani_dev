@@ -233,7 +233,7 @@ class Transfers extends MX_Controller {
 			);
 			
 			
-		$data['warehouses'] = $this->transfers_model->getAllWarehouses();
+		$data['warehouses'] = $this->transfers_model->getAllWarehouses()?$this->transfers_model->getAllWarehouses():[];
 		$data['products'] = $this->transfers_model->getAllProducts();	
                 $data['tax_rates'] = $this->transfers_model->getAllTaxRates();	
 		$data['rnumber'] = $this->transfers_model->getNextAI();

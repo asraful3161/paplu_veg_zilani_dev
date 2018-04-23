@@ -93,7 +93,7 @@
                                 </div>
                                 <div id="lefttop">
                                     <div style="clear:left;"></div>
-                                    <input value="<?php echo $customer->name; ?>" id="customer" name="customer" class="customer" style="width:330px;float: left;" placeholder="Type customer name" onClick="this.select();">
+                                    <input value="<?=isset($customer->name)?$customer->name:''?>" id="customer" name="customer" class="customer" style="width:330px;float: left;" placeholder="Type customer name" onClick="this.select();">
                                     <a href="#" id="showCustomerModal" role="button" data-toggle="modal" style="float: right;width:22px;height:22px; margin-top:-1px; border: 0;"><img src="assets/pos/images/plus-icon.png" alt="+"></a>
 
                                     <div style="clear:left;"></div>

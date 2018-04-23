@@ -750,11 +750,11 @@ class Sales extends MX_Controller {
             );
 
 
-            $data['billers'] = $this->sales_model->getAllBillers();
-            $data['customers'] = $this->sales_model->getAllCustomers();
-            $data['warehouses'] = $this->sales_model->getAllWarehouses();
+            $data['billers'] = $this->sales_model->getAllBillers()?$this->sales_model->getAllBillers():[];
+            $data['customers'] = $this->sales_model->getAllCustomers()?$this->sales_model->getAllCustomers():[];
+            $data['warehouses'] = $this->sales_model->getAllWarehouses()?$this->sales_model->getAllWarehouses():[];
             $data['products'] = $this->sales_model->getAllProducts();
-            $data['tax_rates'] = $this->sales_model->getAllTaxRates();
+            $data['tax_rates'] = $this->sales_model->getAllTaxRates()?$this->sales_model->getAllTaxRates():[];
             $data['discounts'] = $this->sales_model->getAllDiscounts();
             $data['rnumber'] = $this->sales_model->getNextAI();
             if (DISCOUNT_OPTION == 1) {
@@ -766,21 +766,22 @@ class Sales extends MX_Controller {
             }
             if (DISCOUNT_OPTION == 2) {
                 $discount2_details = $this->sales_model->getDiscountByID(DEFAULT_DISCOUNT);
-                $data['discount_rate2'] = $discount2_details->discount;
-                $data['discount_type2'] = $discount2_details->type;
+                //die(var_dump($discount2_details));
+                $data['discount_rate2'] = isset($discount2_details->discount)?$discount2_details->discount:NULL;
+                $data['discount_type2'] = isset($discount2_details->type)?$discount2_details->type:NULL;
             }
             if (TAX1) {
                 $tax_rate_details = $this->sales_model->getTaxRateByID(DEFAULT_TAX);
-                $data['tax_rate'] = $tax_rate_details->rate;
+                $data['tax_rate'] = isset($tax_rate_details->rate)?$tax_rate_details->rate:NULL;
 
-                $data['tax_type'] = $tax_rate_details->type;
-                $data['tax_name'] = $tax_rate_details->name;
+                $data['tax_type'] = isset($tax_rate_details->type)?$tax_rate_details->type:NULL;
+                $data['tax_name'] = isset($tax_rate_details->name)?$tax_rate_details->name:NULL;
             }
             if (TAX2) {
                 $tax_rate2_details = $this->sales_model->getTaxRateByID(DEFAULT_TAX2);
-                $data['tax_rate2'] = $tax_rate2_details->rate;
-                $data['tax_name2'] = $tax_rate2_details->name;
-                $data['tax_type2'] = $tax_rate2_details->type;
+                $data['tax_rate2'] = isset($tax_rate2_details->rate)?$tax_rate2_details->rate:NULL;
+                $data['tax_name2'] = isset($tax_rate2_details->name)?$tax_rate2_details->name:NULL;
+                $data['tax_type2'] = isset($tax_rate2_details->type)?$tax_rate2_details->type:NULL;
             }
 
             $meta['page_title'] = $this->lang->line("add_sale");

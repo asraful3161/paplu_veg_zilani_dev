@@ -49,6 +49,7 @@ echo form_open("module=settings&view=system_setting", $attrib); ?>
     <label class="control-label" for="warehouse"><?php echo $this->lang->line("warehouse"); ?></label>
     <div class="controls">
 <?php
+$wh=[];
 foreach ($warehouses as $warehouse) {
     $wh[$warehouse->id] = $warehouse->name;
 }
@@ -150,6 +151,7 @@ echo form_dropdown('theme', $th, $settings->theme, 'class="span11 tip chzn-selec
     <label class="control-label" for="default_discount"><?php echo $this->lang->line("default_discount"); ?></label>
     <div class="controls">
         <?php
+        $ds=[];
         foreach ($discounts as $discount) {
             $ds[$discount->id] = $discount->name;
         }

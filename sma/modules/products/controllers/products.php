@@ -189,6 +189,8 @@ class Products extends MX_Controller {
 		$this->pagination->initialize($config);
 		
 		$products = $this->products_model->fetch_products($category_id, $config['per_page'], $per_page);
+		if(!$products) $products=[];
+
 		$r = 1;
 		$html = "";
 		$html .= '<table class="table table-bordered">
@@ -203,10 +205,10 @@ class Products extends MX_Controller {
         $html .= '</tr></tbody>
         </table>';
 
-                $data['r'] = $r;	
-                $data['html'] = $html;
+        $data['r'] = $r;	
+        $data['html'] = $html;
 		$data['page_title'] = $this->lang->line("barcode_sheet");
-                $data['categories'] =  $this->products_model->getAllCategories();
+        $data['categories'] =  $this->products_model->getAllCategories()?$this->products_model->getAllCategories():[];
 		
 		$this->load->view('sheet_view', $data);
 		
@@ -241,6 +243,7 @@ class Products extends MX_Controller {
 		$this->pagination->initialize($config);
 		
 		$products = $this->products_model->fetch_products($category_id, $config['per_page'], $per_page);
+		if(!$products) $products=[];
 
 		$html = "";
 		$r = 1;
@@ -252,7 +255,7 @@ class Products extends MX_Controller {
                 $data['r'] = $r;
 		$data['html'] = $html;
 		$data['page_title'] = $this->lang->line("print_labels");
-                $data['categories'] =  $this->products_model->getAllCategories();
+        $data['categories'] =  $this->products_model->getAllCategories()?$this->products_model->getAllCategories():[];
 		
 		$this->load->view('print_labels', $data);
 		
@@ -530,8 +533,8 @@ class Products extends MX_Controller {
 			);
 			
 			
-		$data['categories'] = $this->products_model->getAllCategories();
-		$data['tax_rates'] = $this->products_model->getAllTaxRates();
+		$data['categories'] = $this->products_model->getAllCategories()?$this->products_model->getAllCategories():[];
+		$data['tax_rates'] = $this->products_model->getAllTaxRates()?$this->products_model->getAllTaxRates():[];
 		$meta['page_title'] = $this->lang->line("add_product");
 		$data['page_title'] = $this->lang->line("add_product");
 		$this->load->view('commons/header', $meta);

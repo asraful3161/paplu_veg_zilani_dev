@@ -80,7 +80,7 @@ class Reports extends MX_Controller {
    
    function overview(){
 	   
-	  $data['monthly_sales'] = $this->reports_model->getChartData();
+	  $data['monthly_sales'] = $this->reports_model->getChartData()?$this->reports_model->getChartData():[];
 	  $data['stock'] = $this->reports_model->getStockValue();
 	  $meta['page_title'] = $this->lang->line("stock_chart");
 	  $data['page_title'] = $this->lang->line("stock_chart");
@@ -94,7 +94,7 @@ class Reports extends MX_Controller {
 	  if($this->input->get('warehouse')){ $warehouse = $this->input->get('warehouse'); } else { $warehouse = DEFAULT_WAREHOUSE; }
 	   
 	  $data['stock'] = $this->reports_model->getWarehouseStockValue($warehouse);
-	  $data['warehouses'] = $this->reports_model->getAllWarehouses();
+	  $data['warehouses'] = $this->reports_model->getAllWarehouses()?$this->reports_model->getAllWarehouses():[];
 	  $data['warehouse_id'] = $warehouse;
 	  $meta['page_title'] = $this->lang->line("warehouse_stock_value");
 	  $data['page_title'] = $this->lang->line("stock_value");
@@ -107,8 +107,8 @@ class Reports extends MX_Controller {
 
 	  $data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');	   
 	  $data['users'] = $this->reports_model->getAllUsers();
-	  $data['warehouses'] = $this->reports_model->getAllWarehouses();
-	  $data['suppliers'] = $this->reports_model->getAllSuppliers();
+	  $data['warehouses'] = $this->reports_model->getAllWarehouses()?$this->reports_model->getAllWarehouses():[];
+	  $data['suppliers'] = $this->reports_model->getAllSuppliers()?$this->reports_model->getAllSuppliers():[];
 	   
       $meta['page_title'] = $this->lang->line("purchase_reports");
 	  $data['page_title'] = $this->lang->line("purchase_reports");
@@ -265,7 +265,7 @@ class Reports extends MX_Controller {
 	   $data['message'] = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
 	   if($this->input->post('start_date')){ $dt = "From ".$this->input->post('start_date')." to ".$this->input->post('end_date'); } else { $dt = "Till ".$this->input->post('end_date'); }
       //$meta['page_title'] = $this->lang->line("reports")." ".$dt;
-	  $data['products'] = $this->reports_model->getAllProducts();
+	  $data['products'] = $this->reports_model->getAllProducts()?$this->reports_model->getAllProducts():[];
       $meta['page_title'] = $this->lang->line("product_reports")." ".$dt;
 	  $data['page_title'] = $this->lang->line("product_reports");
       $this->load->view('commons/header', $meta);
@@ -319,8 +319,8 @@ class Reports extends MX_Controller {
 
 	  $data['users'] = $this->reports_model->getAllUsers();
 	  $data['warehouses'] = $this->reports_model->getAllWarehouses();
-	  $data['customers'] = $this->reports_model->getAllCustomers();
-	  $data['billers'] = $this->reports_model->getAllBillers();
+	  $data['customers'] = $this->reports_model->getAllCustomers()?$this->reports_model->getAllCustomers():[];
+	  $data['billers'] = $this->reports_model->getAllBillers()?$this->reports_model->getAllBillers():[];
 	   
       $meta['page_title'] = $this->lang->line("sale_reports");
 	  $data['page_title'] = $this->lang->line("sale_reports");

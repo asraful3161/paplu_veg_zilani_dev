@@ -164,7 +164,7 @@ class Reports_model extends CI_Model
 			}
 				
 			return $data;
-		}
+		}else return [];
 	}
 	
 	public function getAllCustomers() 
@@ -176,7 +176,7 @@ class Reports_model extends CI_Model
 			}
 				
 			return $data;
-		}
+		}else return [];
 	}
 	
 	public function getAllBillers() 
