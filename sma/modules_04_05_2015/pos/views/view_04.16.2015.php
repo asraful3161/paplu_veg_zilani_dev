@@ -262,7 +262,7 @@ if ($customer->address != "-") {
 				<div data-example-id="simple-pre" class="bordered" style="border-radius:5px; border:1px solid #ddd; width:90%; background-color:#f5f5f5; padding:10px; font-size:12px;">
 					<h5 style="margin:0px; padding:0px;">Terms & Condition :</h5>
 					*Please Report Any Damage Goods on Delivery To the Driver.<br>
-					*Goods Remain Property of (Paplu Fresh Vegetables) until Full Payment Has Been Received.<br>
+					*Goods Remain Property of (Zilani) until Full Payment Has Been Received.<br>
 					*Any cheque Dishonoured will Have a Charge of &pound;35.00
 				</div> 
 			</div>

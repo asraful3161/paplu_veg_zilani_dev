@@ -48,10 +48,18 @@ class Pos_model extends CI_Model
 
 	}
 	
-	public function getAllCategories(){
-		
-		return $this->db->get('categories')->result_array();
+	public function getAllCategories() 
+	{
+		$q = $this->db->get('categories');
+		if($q->num_rows() > 0) {
+			foreach (($q->result()) as $row) {
+				$data[] = $row;
+			}
+				
+			return $data;
+		}
 
+		return [];
 	}
 	
 	public function getNextAI() 
@@ -98,14 +106,19 @@ class Pos_model extends CI_Model
         return $this->db->count_all_results();
     }
 
-    public function fetch_products($category_id, $limit, $start){
-
+    public function fetch_products($category_id, $limit, $start) {
         $this->db->limit($limit, $start);
 		$this->db->where('category_id', $category_id);
 		$this->db->order_by("code", "asc"); 
         $query = $this->db->get("products");
-        return $query->result_array();
 
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return [];
    }
    
    public function categories_count() {
