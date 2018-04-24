@@ -74,36 +74,16 @@ class Billers_model extends CI_Model
 
 	}
 	
-	public function addBiller($name, $email, $company, $data = array())
-	{
-		
-		
-		// Biiler data
-		$billerData = array(
-		    'name'	     		=> $data['name'],
-		    'email'   			=> $data['email'],
-		    'company'      		=> $data['company'],
-		    'cf1'      			=> $data['cf1'],
-			'cf2'      			=> $data['cf2'],
-			'cf3'      			=> $data['cf3'],
-			'cf4'      			=> $data['cf4'],
-			'cf5'      			=> $data['cf5'],
-			'cf6'      			=> $data['cf6'],
-		    'address' 			=> $data['address'],
-			'city'	     		=> $data['city'],
-		    'state'   			=> $data['state'],
-		    'postal_code'   	=> $data['postal_code'],
-		    'country' 			=> $data['country'],
-			'phone'	     		=> $data['phone'],
-		    'logo'   			=> $data['logo'],
-		    'invoice_footer' 	=> $data['invoice_footer']
-		);
+	public function addBiller($name, $email, $company, $data=[]){
 
-		if($this->db->insert('billers', $billerData)) {
-			return true;
-		} else {
-			return false;
-		}
+		echo '<pre>';
+var_dump($this->db->insert('billers', $data));
+echo $this->db->_error_message();
+echo '</pre>';
+die;
+
+		if($this->db->insert('billers', $data)) return true;			
+		return false;
 	}
 	
 	public function updateBiller($id, $data = array())
@@ -115,7 +95,7 @@ class Billers_model extends CI_Model
 		    'name'	     		=> $data['name'],
 		    'email'   			=> $data['email'],
 		    'company'      		=> $data['company'],
-		    'cf1'      			=> $data['cf1'],
+		    //'cf1'      			=> $data['cf1'],
 			'cf2'      			=> $data['cf2'],
 			'cf3'      			=> $data['cf3'],
 			'cf4'      			=> $data['cf4'],

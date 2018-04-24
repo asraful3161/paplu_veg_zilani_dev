@@ -402,19 +402,18 @@ class Products extends MX_Controller {
 
 		
 		
-		if ($this->form_validation->run() == true)
-		{
-		
-                    
+		if ($this->form_validation->run() == true){
+
 			$name = $this->input->post('name');
 			$code = $this->input->post('code');
 
-			$data = array('code' => $code,
+			$data =[
+				'code' => $code,
 				'name' => $this->input->post('name'),
 				'category_id' => $this->input->post('category'),
-				'subcategory_id' => $this->input->post('subcategory'),
+				'subcategory_id' => $this->input->post('subcategory')?$this->input->post('subcategory'):NULL,
 				'unit' => $this->input->post('unit'),
-                                'weight' => $this->input->post('weight'), 
+                'weight' => $this->input->post('weight'), 
 				'size' => $this->input->post('size'),
 				'cost' => $this->input->post('cost'),
 				'price' => $this->input->post('price'),
@@ -427,8 +426,10 @@ class Products extends MX_Controller {
 				'cf4' => $this->input->post('cf4'),
 				'cf5' => $this->input->post('cf5'),
 				'cf6' => $this->input->post('cf6'),
-                                'details' => $this->input->post('note')
-			);
+                'details' => $this->input->post('note'),
+                'available_quantity'=>$this->input->post('unit'),
+       			'creator_id'=>$this->session->userdata('user_id')
+			];
 			
 		if($_FILES['userfile']['size'] > 0){
 				

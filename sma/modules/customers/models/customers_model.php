@@ -87,49 +87,36 @@ class Customers_model extends CI_Model
 
 	}
 	
-	public function addCustomer($data = array(), $customer_balance)
-	{
-		 
-		// Customer data 
-		$customerData = array(
-		    'name'	     	        => $data['name'],
-		    'email'   			=> $data['email'],
-		    'company'      		=> $data['company'],
-		    'address' 			=> $data['address'],
-		    'city'	     	        => $data['city'],
-		    'state'   			=> $data['state'],
-		    'postal_code'   	        => $data['postal_code'],
-		    'country' 			=> $data['country'],
-		    'phone'	     	        => $data['phone'],
-                    'mobile'	     	        => $data['mobile']
-		);
+	public function addCustomer($data=[], $customer_balance){
 
-		if($this->db->insert('customers', $customerData)) {
+		//var_dump($data);die;
+
+		if($this->db->insert('customers', $data)){
                     
-                    $customer_id = $this->db->insert_id();
-                    $dateOfupdate= date("d/m/Y");
+            $customer_id=$this->db->insert_id();
+            $dateOfupdate= date("d/m/Y");
                     
-                     $customerBalanceData = array(
-		    'customer_id'	     	=> $customer_id, 
-		    'customer_balance'   	=> $customer_balance,
-                    'total_balance_amount'   	=> '0.00',
-                    'date'   	                => $dateOfupdate
-		    );
+            $customerBalanceData=[
+		    	'customer_id'=> $customer_id, 
+		    	'customer_balance'=> $customer_balance,
+                'total_balance_amount'=> '0.00',
+                'date'=> $dateOfupdate
+		    ];
                       
-                    $this->db->insert('customer_balance', $customerBalanceData);  
+            $this->db->insert('customer_balance', $customerBalanceData);  
                       
-                    $customerHistoryData = array( 
-		    'customer_id'	     	=> $customer_id,  
-		    'total_balance'      	=> '0.00',
-                    'date'   	                => $dateOfupdate
-		    ); 
+            $customerHistoryData=[
+		    	'customer_id'=> $customer_id,  
+		    	'total_balance'=> '0.00',
+                'date'=> $dateOfupdate
+		    ]; 
                        
-                    $this->db->insert('transaction_history', $customerHistoryData);     
-                    
+            $this->db->insert('transaction_history', $customerHistoryData);
+
 			return true;
-		} else {
-			return false;
 		}
+
+		return false;
 	}
 	
 	public function updateCustomer($id, $data = array())

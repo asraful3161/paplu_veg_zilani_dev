@@ -87,34 +87,11 @@ class Suppliers_model extends CI_Model
 
 	}
 	
-	public function addSupplier($name, $email, $company, $data = array())
-	{
-		
-		
-		// Supplier data
-		$supplierData = array(
-		    'name'	   			=> $data['name'],
-		    'email'   				=> $data['email'],
-		    'company'   			=> $data['company'],
-		    'address' 			=> $data['address'],
-			'city'				=> $data['city'],
-		    'state'  				=> $data['state'],
-		    'postal_code' 		=> $data['postal_code'],
-		    'country' 			=> $data['country'],
-			'phone'	     		=> $data['phone'],
-			'cf1'      			=> $data['cf1'],
-			'cf2'      			=> $data['cf2'],
-			'cf3'      			=> $data['cf3'],
-			'cf4'      			=> $data['cf4'],
-			'cf5'      			=> $data['cf5'],
-			'cf6'      			=> $data['cf6']
-		);
+	public function addSupplier($name, $email, $company, $data=[]){
 
-		if($this->db->insert('suppliers', $supplierData)) {
-			return true;
-		} else {
-			return false;
-		}
+		if($this->db->insert('suppliers', $data)) return true;
+		return false;
+		
 	}
 	
 	public function updateSupplier($id, $data = array())

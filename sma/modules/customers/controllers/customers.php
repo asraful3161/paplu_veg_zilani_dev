@@ -67,13 +67,14 @@ class Customers extends MX_Controller {
 
    }
 	
-	function add()
-	{
-            //echo "sfdas"; exit; 
+	function add(){
+
+        //echo "sfdas"; exit; 
             
 		$groups = array('owner', 'admin', 'salesman');
-		if (!$this->ion_auth->in_group($groups))
-		{
+
+		if (!$this->ion_auth->in_group($groups)){
+
 			$this->session->set_flashdata('message', $this->lang->line("access_denied"));
 			$data['message'] = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
 			redirect('module=home', 'refresh');
@@ -92,12 +93,13 @@ class Customers extends MX_Controller {
 
 
 		
-		if ($this->form_validation->run() == true)   
-		{
+		if ($this->form_validation->run() == true){
                     
-                        $customer_balance = $this->input->post('customer_balance'); 
+            $customer_balance = $this->input->post('customer_balance'); 
 
-			$data = array('name' => $this->input->post('name'),
+			$data=[
+				'creator_id'=>$this->session->userdata('user_id'),
+				'name' => $this->input->post('name'),
 				'email' => $this->input->post('email'),
 				'company' => $this->input->post('company'),
 				'cf1' => $this->input->post('cf1'),
@@ -111,9 +113,9 @@ class Customers extends MX_Controller {
 				'state' => 'England',  
 				'postal_code' => $this->input->post('postal_code'),
 				'country' => 'UK',
-                                'mobile' => $this->input->post('mobile'),
+                'mobile' => $this->input->post('mobile'),
 				'phone' => $this->input->post('phone')
-			);
+			];
 		}
 		
 		if ( $this->form_validation->run() == true && $this->customers_model->addCustomer($data, $customer_balance))

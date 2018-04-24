@@ -98,13 +98,14 @@ class Suppliers extends MX_Controller {
 
 
 		
-		if ($this->form_validation->run() == true)
-		{
+		if($this->form_validation->run()==true){
+
 			$name = strtolower($this->input->post('name'));
 			$email = $this->input->post('email');
 			$company = $this->input->post('company');
 
-			$data = array('name' => $this->input->post('name'),
+			$data=[
+				'name' => $this->input->post('name'),
 				'email' => $this->input->post('email'),
 				'company' => $this->input->post('company'),
 				'cf1' => $this->input->post('cf1'),
@@ -118,9 +119,10 @@ class Suppliers extends MX_Controller {
 				'state' => $this->input->post('state'),
 				'postal_code' => $this->input->post('postal_code'),
 				'country' => $this->input->post('country'),
-				'phone' => $this->input->post('phone')
-
-			);
+				'phone' => $this->input->post('phone'),
+       			'creator_id'=>$this->session->userdata('user_id')
+			];
+			
 		}
 		
 		if ( $this->form_validation->run() == true && $this->suppliers_model->addSupplier($name, $email, $company, $data))

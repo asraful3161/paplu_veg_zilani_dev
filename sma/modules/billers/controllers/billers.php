@@ -82,7 +82,7 @@ class Billers extends MX_Controller {
 		$this->form_validation->set_rules('name', $this->lang->line("name"), 'required|xss_clean');
 		$this->form_validation->set_rules('email', $this->lang->line("email_address"), 'required|valid_email');
 		$this->form_validation->set_rules('company', $this->lang->line("company"), 'required|xss_clean');
-		$this->form_validation->set_rules('cf1', $this->lang->line("bcf1"), 'xss_clean');
+		//$this->form_validation->set_rules('cf1', $this->lang->line("bcf1"), 'xss_clean');
 		$this->form_validation->set_rules('cf2', $this->lang->line("bcf2"), 'xss_clean');
 		$this->form_validation->set_rules('cf2', $this->lang->line("bcf3"), 'xss_clean');
 		$this->form_validation->set_rules('cf4', $this->lang->line("bcf4"), 'xss_clean');
@@ -107,7 +107,7 @@ class Billers extends MX_Controller {
 			$data = array('name' => $this->input->post('name'),
 				'email' => $this->input->post('email'),
 				'company' => $this->input->post('company'),
-				'cf1' => $this->input->post('cf1'),
+				//'cf1' => $this->input->post('cf1'),
 				'cf2' => $this->input->post('cf2'),
 				'cf3' => $this->input->post('cf3'),
 				'cf4' => $this->input->post('cf4'),
@@ -210,7 +210,7 @@ class Billers extends MX_Controller {
 		$this->form_validation->set_rules('name', $this->lang->line("name"), 'required|xss_clean');
 		$this->form_validation->set_rules('email', $this->lang->line("email_address"), 'required|valid_email');
 		$this->form_validation->set_rules('company', $this->lang->line("company"), 'required|xss_clean');
-		$this->form_validation->set_rules('cf1', $this->lang->line("bcf1"), 'xss_clean');
+		//$this->form_validation->set_rules('cf1', $this->lang->line("bcf1"), 'xss_clean');
 		$this->form_validation->set_rules('cf2', $this->lang->line("bcf2"), 'xss_clean');
 		$this->form_validation->set_rules('cf2', $this->lang->line("bcf3"), 'xss_clean');
 		$this->form_validation->set_rules('cf4', $this->lang->line("bcf4"), 'xss_clean');
@@ -231,7 +231,7 @@ class Billers extends MX_Controller {
 			$data = array('name' => $this->input->post('name'),
 				'email' => $this->input->post('email'),
 				'company' => $this->input->post('company'),
-				'cf1' => $this->input->post('cf1'),
+				//'cf1' => $this->input->post('cf1'),
 				'cf2' => $this->input->post('cf2'),
 				'cf3' => $this->input->post('cf3'),
 				'cf4' => $this->input->post('cf4'),

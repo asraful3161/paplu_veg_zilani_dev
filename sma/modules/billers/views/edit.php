@@ -180,11 +180,11 @@ $(function() {
 		}
 		echo form_dropdown('logo', $biller_logos, $biller->logo, 'data-placeholder="'.$this->lang->line("select")." ".$this->lang->line("biller_logo").'" required="required" data-error="'.$this->lang->line("biller_logo").' '.$this->lang->line("is_required").'"'); ?> </div>
 </div>
-<div class="control-group">
+<!-- <div class="control-group">
   <label class="control-label" for="cf1"><?php echo $this->lang->line("bcf1"); ?></label>
   <div class="controls"> <?php echo form_input($cf1);?>
   </div>
-</div> 
+</div>  -->
 <div class="control-group">
   <label class="control-label" for="cf2"><?php echo $this->lang->line("bcf2"); ?></label>
   <div class="controls"> <?php echo form_input($cf2);?>
