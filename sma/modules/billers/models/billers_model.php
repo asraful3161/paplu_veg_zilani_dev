@@ -76,14 +76,9 @@ class Billers_model extends CI_Model
 	
 	public function addBiller($name, $email, $company, $data=[]){
 
-		echo '<pre>';
-var_dump($this->db->insert('billers', $data));
-echo $this->db->_error_message();
-echo '</pre>';
-die;
-
 		if($this->db->insert('billers', $data)) return true;			
 		return false;
+		
 	}
 	
 	public function updateBiller($id, $data = array())
