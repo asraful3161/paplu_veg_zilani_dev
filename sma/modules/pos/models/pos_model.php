@@ -58,8 +58,6 @@ class Pos_model extends CI_Model
 				
 			return $data;
 		}
-
-		return [];
 	}
 	
 	public function getNextAI() 
@@ -118,7 +116,7 @@ class Pos_model extends CI_Model
             }
             return $data;
         }
-        return [];
+        return false;
    }
    
    public function categories_count() {

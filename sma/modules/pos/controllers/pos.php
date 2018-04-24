@@ -392,21 +392,21 @@ class Pos extends MX_Controller {
             }
             if (DISCOUNT_OPTION == 2) {
                 $discount2_details = $this->pos_model->getDiscountByID(DEFAULT_DISCOUNT);
-                $data['discount_rate2'] = isset($discount2_details->discount)?$discount2_details->discount:NULL;
-                $data['discount_type2'] = isset($discount2_details->type)?$discount2_details->type:NULL;
+                $data['discount_rate2'] = $discount2_details->discount;
+                $data['discount_type2'] = $discount2_details->type;
             }
             if (TAX1) {
                 $tax_rate_details = $this->pos_model->getTaxRateByID(DEFAULT_TAX);
-                $data['tax_rate'] = isset($tax_rate_details->rate)?$tax_rate_details->rate:NULL;
+                $data['tax_rate'] = $tax_rate_details->rate;
 
-                $data['tax_type'] = isset($tax_rate_details->type)?$tax_rate_details->type:NULL;
-                $data['tax_name'] = isset($tax_rate_details->name)?$tax_rate_details->name:NULL;
+                $data['tax_type'] = $tax_rate_details->type;
+                $data['tax_name'] = $tax_rate_details->name;
             }
             if (TAX2) {
                 $tax_rate2_details = $this->pos_model->getTaxRateByID(DEFAULT_TAX2);
-                $data['tax_rate2'] = isset($tax_rate2_details->rate)?$tax_rate2_details->rate:NULL;
-                $data['tax_name2'] = isset($tax_rate2_details->name)?$tax_rate2_details->name:NULL;
-                $data['tax_type2'] = isset($tax_rate2_details->type)?$tax_rate2_details->type:NULL;
+                $data['tax_rate2'] = $tax_rate2_details->rate;
+                $data['tax_name2'] = $tax_rate2_details->name;
+                $data['tax_type2'] = $tax_rate2_details->type;
             }
             $data['products'] = $this->ajaxproducts(DCAT);
             $data['categories'] = $this->poscategories();
