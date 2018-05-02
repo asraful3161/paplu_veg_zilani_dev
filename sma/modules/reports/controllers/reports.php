@@ -510,14 +510,14 @@ class Reports extends MX_Controller {
 
 		if($customer){
 
-			$this->datatables->select("customers.name, customers.mobile, payment, IFNULL(less, 0) - IFNULL(charge, 0), IFNULL(bill_amount, 0) - IFNULL(payment, 0) - IFNULL(less, 0) + IFNULL(charge, 0) AS total_unpaid, bill_amount", FALSE)
+			$this->datatables->select("customers.name, customers.mobile, payment, IFNULL(bill_amount, 0) - IFNULL(payment, 0) - IFNULL(less, 0) + IFNULL(charge, 0) AS total_unpaid, bill_amount", FALSE)
 			->from('transaction_history')
 			->join('customers', 'customers.id=transaction_history.customer_id')
 			->where('customer_id', $customer);
 
 		}else{
 
-			$this->datatables->select("customers.name, customers.mobile, SUM(payment), SUM(IFNULL(less, 0) - IFNULL(charge, 0)), SUM(IFNULL(bill_amount, 0) - IFNULL(payment, 0) - IFNULL(less, 0) + IFNULL(charge, 0)) AS total_unpaid, SUM(bill_amount)", FALSE)
+			$this->datatables->select("customers.name, customers.mobile, SUM(payment), SUM(IFNULL(bill_amount, 0) - IFNULL(payment, 0) - IFNULL(less, 0) + IFNULL(charge, 0)) AS total_unpaid, SUM(bill_amount)", FALSE)
 			->from('transaction_history')
 			->join('customers', 'customers.id=transaction_history.customer_id')
 			->group_by('customer_id');
@@ -535,17 +535,17 @@ class Reports extends MX_Controller {
 
 		if($start_date && $end_date){
 
-			$this->datatables->where('payment', 0);
+			//$this->datatables->where('payment', 0);
 			$this->datatables->where("DATE_FORMAT(STR_TO_DATE(transaction_history.date, '%d/%m/%Y'), '%Y-%m-%d') BETWEEN '{$start_date}' AND '{$end_date}'");
 
 		}elseif($start_date){
 
-			$this->datatables->where('payment', 0);
+			//$this->datatables->where('payment', 0);
 			$this->datatables->where("DATE_FORMAT(STR_TO_DATE(transaction_history.date, '%d/%m/%Y'), '%Y-%m-%d') >=", $start_date);
 
 		}elseif($end_date){
 
-			$this->datatables->where('payment', 0);
+			//$this->datatables->where('payment', 0);
 			$this->datatables->where("DATE_FORMAT(STR_TO_DATE(transaction_history.date, '%d/%m/%Y'), '%Y-%m-%d') <=", $end_date);			
 
 		}

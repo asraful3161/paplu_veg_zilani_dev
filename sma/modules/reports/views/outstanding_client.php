@@ -139,13 +139,13 @@ if($this->input->post('submit')){
 				{
 					"sExtends": "csv",
 					"sFileName": "<?=$this->lang->line("sales")?>.csv",
-					"mColumns": [0, 1, 2, 3, 4, 5]
+					"mColumns": [0, 1, 2, 3, 4]
 				},
 				{
 					"sExtends": "pdf",
 					"sFileName": "<?=$this->lang->line("sales")?>.pdf",
 					"sPdfOrientation": "landscape",
-					"mColumns": [0, 1, 2, 3, 4, 5]
+					"mColumns": [0, 1, 2, 3, 4]
 				},
 				"print"
 				]
@@ -154,7 +154,7 @@ if($this->input->post('submit')){
 				null,
 				null,
 				{"mRender": currencyFormate},
-				{"mRender": currencyFormate},
+				// {"mRender": currencyFormate},
 				{"mRender": currencyFormate},
 				{"mRender": currencyFormate}
 			],
@@ -162,7 +162,7 @@ if($this->input->post('submit')){
 			"fnFooterCallback": function(nRow, aaData, iStart, iEnd, aiDisplay){
 
 				var total_paid = 0;
-				var total_adjustment =0;
+				// var total_adjustment =0;
 				var total_unpaid =0;
 				var total_sales = 0;
 				
@@ -172,25 +172,27 @@ if($this->input->post('submit')){
 						total_paid+= parseFloat(aaData[aiDisplay[i]][2]);
 					}
 
+					/*
 					if(aaData[aiDisplay[i]][3]){					
 						total_adjustment+= parseFloat(aaData[aiDisplay[i]][3]);
 					}
+					*/
 
-					if(aaData[aiDisplay[i]][4]){					
-						total_unpaid+= parseFloat(aaData[aiDisplay[i]][4]);
+					if(aaData[aiDisplay[i]][3]){					
+						total_unpaid+= parseFloat(aaData[aiDisplay[i]][3]);
 					}
 					
-					if(aaData[aiDisplay[i]][5]){
-						total_sales+= parseFloat(aaData[aiDisplay[i]][5]);
+					if(aaData[aiDisplay[i]][4]){
+						total_sales+= parseFloat(aaData[aiDisplay[i]][4]);
 					}
 
 				}
 
 				var nCells = nRow.getElementsByTagName('th');
 				nCells[2].innerHTML = currencyFormate(parseFloat(total_paid).toFixed(2));
-				nCells[3].innerHTML = currencyFormate(parseFloat(total_adjustment).toFixed(2));
-				nCells[4].innerHTML = currencyFormate(parseFloat(total_unpaid).toFixed(2));
-				nCells[5].innerHTML = currencyFormate(parseFloat(total_sales).toFixed(2));
+				// nCells[3].innerHTML = currencyFormate(parseFloat(total_adjustment).toFixed(2));
+				nCells[3].innerHTML = currencyFormate(parseFloat(total_unpaid).toFixed(2));
+				nCells[4].innerHTML = currencyFormate(parseFloat(total_sales).toFixed(2));
 
 			}
 
@@ -198,7 +200,6 @@ if($this->input->post('submit')){
 
 			{ type: "text", bRegex:true },
 			{ type: "text", bRegex:true },
-			null,
 			null,
 			null,
 			null
@@ -321,7 +322,6 @@ if($this->input->post('submit')){
 	            <th><?=$this->lang->line("customer")?></th>
 	            <th><?=$this->lang->line("contact")?></th>
 	            <th><?=$this->lang->line("total_paid")?></th>
-	            <th><?=$this->lang->line("total_adjustment")?></th>
 	            <th><?=$this->lang->line("total_unpaid")?></th>
 	            <th><?=$this->lang->line("total_sales")?></th>
 			</tr>
@@ -337,7 +337,6 @@ if($this->input->post('submit')){
 	            <th>[<?=$this->lang->line("customer")?>]</th>
 	            <th>[<?=$this->lang->line("contact")?>]</th>
 	            <th><?=$this->lang->line("total_paid")?></th>
-	            <th><?=$this->lang->line("total_adjustment")?></th>
 	            <th><?=$this->lang->line("total_unpaid")?></th>
 	            <th><?=$this->lang->line("total_sales")?></th>
 			</tr>
