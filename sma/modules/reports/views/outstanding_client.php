@@ -112,9 +112,10 @@ if($this->input->post('submit')){
 	$(document).ready(function() {
 
 		$('#fileData').dataTable( {
-			"aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+			"aLengthMenu": [[ -1, 10, 25, 50, 100], ["All", 10, 25, 50, 100]],
 			"aaSorting": [[ 1, "desc" ]],
-			"iDisplayLength": <?=ROWS_PER_PAGE?>,
+			//"iDisplayLength": <?=ROWS_PER_PAGE?>,
+			"iDisplayLength": -1,
 			'bProcessing'    : true,
 			'bServerSide'    : true,
 			'sAjaxSource'    : "<?=base_url()?>index.php?module=reports&view=get_outstanding_client<?php 
