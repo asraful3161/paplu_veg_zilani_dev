@@ -16,7 +16,7 @@ if($this->input->post('submit')){
 
 ?>
 
-<script src="<?=base_url()?>assets/media/js/jquery.dataTables.columnFilter.js" type="text/javascript">
+<script src="<?=base_url()?>" type="text/javascript">
 </script>
 
 <style type="text/css">
@@ -104,9 +104,10 @@ if($this->input->post('submit')){
 	$(document).ready(function() {
 
 		$('#fileData').dataTable( {
-			"aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+			"aLengthMenu": [[-1, 10, 25, 50, 100], ["All", 10, 25, 50, 100]],
 			"aaSorting": [[ 1, "desc" ]],
-			"iDisplayLength": <?=ROWS_PER_PAGE?>,
+			"iDisplayLength": -1,
+			//"iDisplayLength": <?=ROWS_PER_PAGE?>,
 			'bProcessing'    : true,
 			'bServerSide'    : true,
 			'sAjaxSource'    : "<?=base_url()?>index.php?module=reports&view=get_outstanding_sales<?php 
@@ -131,13 +132,13 @@ if($this->input->post('submit')){
 				{
 					"sExtends": "csv",
 					"sFileName": "<?=$this->lang->line("sales")?>.csv",
-					"mColumns": [0, 1, 2, 3, 4, 5, 6]
+					"mColumns": [0, 1, 2, 3, 4, 5]
 				},
 				{
 					"sExtends": "pdf",
 					"sFileName": "<?=$this->lang->line("sales")?>.pdf",
 					"sPdfOrientation": "landscape",
-					"mColumns": [0, 1, 2, 3, 4, 5, 6]
+					"mColumns": [0, 1, 2, 3, 4, 5]
 				},
 				"print"
 				]
@@ -148,7 +149,6 @@ if($this->input->post('submit')){
 				{"mRender": currencyFormate},
 				{"mRender": currencyFormate},
 				{"mRender": currencyFormate},
-				{"mRender": currencyFormate},
 				{"mRender": currencyFormate}
 			],
 
@@ -156,7 +156,6 @@ if($this->input->post('submit')){
 
 				var invoice_amount = 0;
 				var less_amount =0;
-				var charge_amount =0;
 				var paid_amount = 0;
 				var outstanding_amount = 0;
 				
@@ -169,16 +168,12 @@ if($this->input->post('submit')){
 					if(aaData[aiDisplay[i]][3]){					
 						less_amount+= parseFloat(aaData[aiDisplay[i]][3]);
 					}
-
-					if(aaData[aiDisplay[i]][4]){					
-						charge_amount+= parseFloat(aaData[aiDisplay[i]][4]);
-					}
 					
-					if(aaData[aiDisplay[i]][5]){
+					if(aaData[aiDisplay[i]][4]){
 						paid_amount+= parseFloat(aaData[aiDisplay[i]][5]);
 					}
 					
-					if(aaData[aiDisplay[i]][6]){
+					if(aaData[aiDisplay[i]][5]){
 						outstanding_amount+= parseFloat(aaData[aiDisplay[i]][6]);
 					}
 
@@ -187,9 +182,8 @@ if($this->input->post('submit')){
 				var nCells = nRow.getElementsByTagName('th');
 				nCells[2].innerHTML = currencyFormate(parseFloat(invoice_amount).toFixed(2));
 				nCells[3].innerHTML = currencyFormate(parseFloat(less_amount).toFixed(2));
-				nCells[4].innerHTML = currencyFormate(parseFloat(charge_amount).toFixed(2));
-				nCells[5].innerHTML = currencyFormate(parseFloat(paid_amount).toFixed(2));
-				nCells[6].innerHTML = currencyFormate(parseFloat(outstanding_amount).toFixed(2));
+				nCells[4].innerHTML = currencyFormate(parseFloat(paid_amount).toFixed(2));
+				nCells[5].innerHTML = currencyFormate(parseFloat(outstanding_amount).toFixed(2));
 
 			}
 
@@ -197,7 +191,6 @@ if($this->input->post('submit')){
 
 			{ type: "text", bRegex:true },
 			{ type: "text", bRegex:true },
-			null,
 			null,
 			null,
 			null,
@@ -286,7 +279,6 @@ if($this->input->post('submit')){
             <th><?=$this->lang->line("customer")?></th>
             <th><?=$this->lang->line("invoice_amount")?></th>
             <th><?=$this->lang->line("less_amount")?></th>
-            <th><?=$this->lang->line("charge_amount")?></th>
             <th><?=$this->lang->line("paid_amount")?></th>
             <th><?=$this->lang->line("outstanding_amount")?></th>
 	</tr>
@@ -304,7 +296,6 @@ if($this->input->post('submit')){
             <th>[<?=$this->lang->line("customer")?>]</th>
             <th><?=$this->lang->line("invoice_amount")?></th>
             <th><?=$this->lang->line("less_amount")?></th>
-            <th><?=$this->lang->line("charge_amount")?></th>
             <th><?=$this->lang->line("paid_amount")?></th>
             <th><?=$this->lang->line("outstanding_amount")?></th>
 	</tr>

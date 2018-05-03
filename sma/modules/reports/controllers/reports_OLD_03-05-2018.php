@@ -32,16 +32,16 @@ class Reports extends MX_Controller {
 		$this->load->model('reports_model');
 	}
 	
-	function index(){
-
-		$data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');	   
-		$meta['page_title'] = $this->lang->line("reports");
-		$data['page_title'] = $this->lang->line("reports");
-		$this->load->view('commons/header', $meta);
-		$this->load->view('content', $data);
-		$this->load->view('commons/footer');
-	
-	}
+   function index(){
+	   
+	   $data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+	   
+      $meta['page_title'] = $this->lang->line("reports");
+	  $data['page_title'] = $this->lang->line("reports");
+      $this->load->view('commons/header', $meta);
+      $this->load->view('content', $data);
+      $this->load->view('commons/footer');
+   }
    
    function products($alerts = "alerts"){
 	   
@@ -438,14 +438,14 @@ class Reports extends MX_Controller {
 
 		if($customer){
 
-			$this->datatables->select("DATE_FORMAT(STR_TO_DATE(date, '%d/%m/%Y'), '%Y-%m-%d'), customers.name, bill_amount, less, payment, IFNULL(bill_amount, 0) - IFNULL(payment, 0) - IFNULL(less, 0) + IFNULL(charge, 0)", FALSE)
+			$this->datatables->select("DATE_FORMAT(STR_TO_DATE(date, '%d/%m/%Y'), '%Y-%m-%d'), customers.name, bill_amount, less, charge, payment, IFNULL(bill_amount, 0) - IFNULL(payment, 0) - IFNULL(less, 0) + IFNULL(charge, 0)", FALSE)
 			->from('transaction_history')
 			->join('customers', 'customers.id=transaction_history.customer_id')
 			->where('customer_id', $customer);
 
 		}else{
 
-			$this->datatables->select("DATE_FORMAT(STR_TO_DATE(date, '%d/%m/%Y'), '%Y-%m-%d'), customers.name, SUM(bill_amount), SUM(less), SUM(payment), SUM(IFNULL(bill_amount, 0) - IFNULL(payment, 0) - IFNULL(less, 0) + IFNULL(charge, 0))", FALSE)
+			$this->datatables->select("DATE_FORMAT(STR_TO_DATE(date, '%d/%m/%Y'), '%Y-%m-%d'), customers.name, SUM(bill_amount), SUM(less), SUM(charge), SUM(payment), SUM(IFNULL(bill_amount, 0) - IFNULL(payment, 0) - IFNULL(less, 0) + IFNULL(charge, 0))", FALSE)
 			->from('transaction_history')
 			->join('customers', 'customers.id=transaction_history.customer_id')
 			->group_by('customer_id');

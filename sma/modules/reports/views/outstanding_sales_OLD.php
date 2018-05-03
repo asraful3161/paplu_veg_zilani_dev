@@ -8,11 +8,15 @@ if($this->input->post('submit')){
 
 	if($this->input->post('end_date')) $v.= "&end_date=".$this->input->post('end_date');
 
+	if($this->input->post('paid_by')) $v.= "&paid_by=".$this->input->post('paid_by');
+	
+	if($this->input->post('customer')) $v.= "&customer=".$this->input->post('customer');
+
 }
 
 ?>
 
-<script src="<?=base_url()?>assets/media/js/jquery.dataTables.columnFilter.js" type="text/javascript">
+<script src="<?=base_url()?>" type="text/javascript">
 </script>
 
 <style type="text/css">
@@ -44,18 +48,21 @@ if($this->input->post('submit')){
 	text-align: center;
 }
 
-.table td:nth-child(5){
+.table td:nth-child(7){
 	font-size:90%;
 }
 
-.table td:nth-child(2),
-.table tfoot th:nth-child(2),
+
 .table td:nth-child(3),
 .table tfoot th:nth-child(3),
 .table td:nth-child(4),
 .table tfoot th:nth-child(4),
 .table td:nth-child(5),
-.table tfoot th:nth-child(5){
+.table tfoot th:nth-child(5),
+.table td:nth-child(6),
+.table tfoot th:nth-child(6),
+.table td:nth-child(7),
+.table tfoot th:nth-child(7){
 	text-align:right;
 }
 
@@ -97,9 +104,10 @@ if($this->input->post('submit')){
 	$(document).ready(function() {
 
 		$('#fileData').dataTable( {
-			"aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+			"aLengthMenu": [[-1, 10, 25, 50, 100], ["All", 10, 25, 50, 100]],
 			"aaSorting": [[ 1, "desc" ]],
-			"iDisplayLength": <?=ROWS_PER_PAGE?>,
+			"iDisplayLength": -1,
+			//"iDisplayLength": <?=ROWS_PER_PAGE?>,
 			'bProcessing'    : true,
 			'bServerSide'    : true,
 			'sAjaxSource'    : "<?=base_url()?>index.php?module=reports&view=get_outstanding_sales<?php 
@@ -124,19 +132,21 @@ if($this->input->post('submit')){
 				{
 					"sExtends": "csv",
 					"sFileName": "<?=$this->lang->line("sales")?>.csv",
-					"mColumns": [0, 1, 2, 3, 4]
+					"mColumns": [0, 1, 2, 3, 4, 5, 6]
 				},
 				{
 					"sExtends": "pdf",
 					"sFileName": "<?=$this->lang->line("sales")?>.pdf",
 					"sPdfOrientation": "landscape",
-					"mColumns": [0, 1, 2, 3, 4]
+					"mColumns": [0, 1, 2, 3, 4, 5, 6]
 				},
 				"print"
 				]
 			},
 			"aoColumns": [
+				{ "mRender": format_date },
 				null,
+				{"mRender": currencyFormate},
 				{"mRender": currencyFormate},
 				{"mRender": currencyFormate},
 				{"mRender": currencyFormate},
@@ -147,40 +157,48 @@ if($this->input->post('submit')){
 
 				var invoice_amount = 0;
 				var less_amount =0;
+				var charge_amount =0;
 				var paid_amount = 0;
 				var outstanding_amount = 0;
 				
 				for( var i=0; i < aaData.length; i++){
 
-					if(aaData[aiDisplay[i]][1]){
-						invoice_amount+= parseFloat(aaData[aiDisplay[i]][1]);
+					if(aaData[aiDisplay[i]][2]){
+						invoice_amount+= parseFloat(aaData[aiDisplay[i]][2]);
 					}
 
-					if(aaData[aiDisplay[i]][2]){					
-						less_amount+= parseFloat(aaData[aiDisplay[i]][2]);
+					if(aaData[aiDisplay[i]][3]){					
+						less_amount+= parseFloat(aaData[aiDisplay[i]][3]);
+					}
+
+					if(aaData[aiDisplay[i]][4]){					
+						charge_amount+= parseFloat(aaData[aiDisplay[i]][4]);
 					}
 					
-					if(aaData[aiDisplay[i]][3]){
-						paid_amount+= parseFloat(aaData[aiDisplay[i]][3]);
+					if(aaData[aiDisplay[i]][5]){
+						paid_amount+= parseFloat(aaData[aiDisplay[i]][5]);
 					}
 					
-					if(aaData[aiDisplay[i]][4]){
-						outstanding_amount+= parseFloat(aaData[aiDisplay[i]][4]);
+					if(aaData[aiDisplay[i]][6]){
+						outstanding_amount+= parseFloat(aaData[aiDisplay[i]][6]);
 					}
 
 				}
 
 				var nCells = nRow.getElementsByTagName('th');
-				nCells[1].innerHTML = currencyFormate(parseFloat(invoice_amount).toFixed(2));
-				nCells[2].innerHTML = currencyFormate(parseFloat(less_amount).toFixed(2));
-				nCells[3].innerHTML = currencyFormate(parseFloat(paid_amount).toFixed(2));
-				nCells[4].innerHTML = currencyFormate(parseFloat(outstanding_amount).toFixed(2));
+				nCells[2].innerHTML = currencyFormate(parseFloat(invoice_amount).toFixed(2));
+				nCells[3].innerHTML = currencyFormate(parseFloat(less_amount).toFixed(2));
+				nCells[4].innerHTML = currencyFormate(parseFloat(charge_amount).toFixed(2));
+				nCells[5].innerHTML = currencyFormate(parseFloat(paid_amount).toFixed(2));
+				nCells[6].innerHTML = currencyFormate(parseFloat(outstanding_amount).toFixed(2));
 
 			}
 
 		} ).columnFilter({ aoColumns: [
 
 			{ type: "text", bRegex:true },
+			{ type: "text", bRegex:true },
+			null,
 			null,
 			null,
 			null,
@@ -223,6 +241,33 @@ if($this->input->post('submit')){
 </div>
 
 <div class="control-group">
+  <label class="control-label" for="paid_by">
+  	<?=$this->lang->line("paid_by")?>  		
+  </label>
+  <div class="controls">
+
+	<?=form_dropdown('paid_by', [
+		'all'=>'All',
+		'cash'=>'Cash',
+		'invoice'=>'Invoice',
+		'cheque'=>'Cheque',
+	], (isset($_POST['paid_by']) ? $_POST['paid_by'] : ""), 'class="span4" id="paid_by" data-placeholder="'.$this->lang->line("select")." ".$this->lang->line("paid_by").'"')
+	?>
+
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label" for="customer"><?php echo $this->lang->line("customer"); ?></label>
+  <div class="controls"> <?php 
+	   		$cu[""] = "";
+	   		foreach($customers as $customer){
+				$cu[$customer->id] = $customer->name;
+			}
+			echo form_dropdown('customer', $cu, (isset($_POST['customer']) ? $_POST['customer'] : ""), 'class="span4" id="customer" data-placeholder="'.$this->lang->line("select")." ".$this->lang->line("customer").'"');  ?> </div>
+</div>
+
+<div class="control-group">
 	<div class="controls">
 		<?=form_submit('submit', $this->lang->line("submit"), 'class="btn btn-primary"');?>			
 	</div>
@@ -238,9 +283,11 @@ if($this->input->post('submit')){
 	<table id="fileData" class="table table-bordered table-hover table-striped table-condensed" style="margin-bottom: 5px;">
 		<thead>
         <tr>
+        	<th><?php echo $this->lang->line("date"); ?></th>
             <th><?=$this->lang->line("customer")?></th>
             <th><?=$this->lang->line("invoice_amount")?></th>
             <th><?=$this->lang->line("less_amount")?></th>
+            <th><?=$this->lang->line("charge_amount")?></th>
             <th><?=$this->lang->line("paid_amount")?></th>
             <th><?=$this->lang->line("outstanding_amount")?></th>
 	</tr>
@@ -254,9 +301,11 @@ if($this->input->post('submit')){
         <tfoot>
 
         <tr>
+        	<th>[<?php echo $this->lang->line("date"); ?>]</th>
             <th>[<?=$this->lang->line("customer")?>]</th>
             <th><?=$this->lang->line("invoice_amount")?></th>
             <th><?=$this->lang->line("less_amount")?></th>
+            <th><?=$this->lang->line("charge_amount")?></th>
             <th><?=$this->lang->line("paid_amount")?></th>
             <th><?=$this->lang->line("outstanding_amount")?></th>
 	</tr>
