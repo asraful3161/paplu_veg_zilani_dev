@@ -88,19 +88,53 @@ $(document).ready(function(){
                             $('.pcash').hide();
                         }
                     });
+
+
+                	var action_type=$("#action_type").val();
+
+                	if(action_type=='payment_in'){
+
+                        $('.commence_date').show();
+                        $('#paid_by').show();
+                        $('#div_less_amount').show();
+
+                    }else if(action_type=='deduct_amount'){
+
+                        $('.commence_date').hide(); 
+                        $('#paid_by').hide();
+                        $('#div_less_amount').hide();
+
+                    }else if(action_type == 'add_charge'){
+
+                        $('.commence_date').hide();
+                        $('#paid_by').hide();
+                        $('#div_less_amount').hide();
+
+                    }
                     
                     
-                     $("#action_type").change(function() {
-                        var a_val = $(this).val();
-                        if (a_val == 'payment_in') {
+                     $("#action_type").change(function(){
+
+                        var action_type=$(this).val();
+
+                        if(action_type=='payment_in'){
+
                             $('.commence_date').show();
-                            $('#paid_by').show(); 
-                        } else if (a_val == 'deduct_amount') {
+                            $('#paid_by').show();
+                            $('#div_less_amount').show();
+
+                        } else if(action_type=='deduct_amount'){
+
                             $('.commence_date').hide(); 
-                            $('#paid_by').hide(); 
-                        } else if (a_val == 'add_charge') {
+                            $('#paid_by').hide();
+                            $('#div_less_amount').hide();
+
+                        } else if(action_type=='add_charge'){
+
                             $('.commence_date').hide();
-                            $('#paid_by').hide(); 
+                            $('#paid_by').hide();
+                            $('#div_less_amount').hide();
+
                         } 
                         
                     });
@@ -109,11 +143,20 @@ $(document).ready(function(){
 });
 
 </script>
-<?php if($message) { echo "<div class=\"alert alert-error\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>" . $message . "</div>"; } ?>
-	<h3 class="title"><?php echo 'Customer Balance Update'; ?></h3>
+
+	<?php if($message): ?>
+		<div class="alert alert-error">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<?=$message?>
+		</div>
+	<?php endif ?>
+
+	<h3 class="title">Customer Balance Update</h3>
+
 	<p><?php echo $this->lang->line("enter_info"); ?></p>
     
 	<?php $attrib = array('class' => 'form-horizontal'); echo form_open("module=discount&view=update_customer_balance", $attrib); ?>
+
 <!--<div class="control-group">
   <label class="control-label" for="customer">Customer</label>
   <div class="controls">
@@ -162,9 +205,16 @@ $(document).ready(function(){
 
 
 <div class="control-group">
-  <label class="control-label" for="amount"><?php echo 'Amount'; ?></label>
-  <div class="controls"> <?php echo form_input('amount', '',  ' placeholder="Enter Amount" class="span4" id="amount" required="required" data-error="'.Amount.' '.$this->lang->line("is_required").'"'); ?>
+  <label class="control-label" for="amount">Amount</label>
+  <div class="controls"> <?=form_input('amount', set_value('amount'),  "placeholder='Enter Amount' class='span4' id='amount' required='required' data-error='Amount".' '.$this->lang->line("is_required")."'"); ?>
         </div>
+</div>
+
+<div class="control-group" id='div_less_amount'>
+  <label class="control-label" for="less_amount">Less Amount</label>
+  <div class="controls">
+  	<?=form_input('less_amount', set_value('less_amount'), "placeholder='Enter Less Amount' class='span4' id='less_amount'"); ?>
+  </div>
 </div>
 
 <div id="paid_by" class="control-group">

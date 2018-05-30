@@ -21,140 +21,145 @@
 */
 
 
-class Discount_model extends CI_Model
-{
+class Discount_model extends CI_Model{
 	
 	
-	public function __construct()
-	{
+	public function __construct(){
+
 		parent::__construct();
 
 	}
         
-        public function getAllCustomer() 
-	{
+  public function getAllCustomer(){
+
 		$this->db->select('*')->from('customers');
 		$q = $this->db->get();
-		if($q->num_rows() > 0) {
-			foreach (($q->result()) as $row) {
-				$data[] = $row;
-			}
+
+		if($q->num_rows()>0){
+
+			foreach($q->result() as $row){
+
+        $data[] = $row;
+
+      }
 				
 			return $data;
+
 		}
+
 	}
         
-            public function getAllProduct() 
-	{
+  public function getAllProduct(){
+
 		$this->db->select('*')->from('products');
 		$q = $this->db->get();
-		if($q->num_rows() > 0) {
-			foreach (($q->result()) as $row) {
+
+		if($q->num_rows()>0){
+
+			foreach ($q->result() as $row){
+
 				$data[] = $row;
+
 			}
 				
 			return $data;
+
 		}
+
 	}
         
         
-        public function addCustomerDiscount($data)
-	{
+  public function addCustomerDiscount($data){
 
-			$discountData = array(
-				'customer_id'	     	=> $data['customer_id'],
-                                'product_id'	     	=> $data['product_id'],
-				'discount_amount' 	=> $data['discount'],
-				'discount_type' 	=> $data['type'] 
-			);
+		$discountData=array(
 
-		if($this->db->insert('customer_discount', $discountData)) {
-			return true;
-		} else {
-			return false;
-		}
+			'customer_id'=>$data['customer_id'],
+      'product_id'=>$data['product_id'],
+			'discount_amount'=>$data['discount'],
+			'discount_type'=>$data['type'] 
+
+		);
+
+		if($this->db->insert('customer_discount', $discountData)) return TRUE;
+		else return FALSE;
+
 	}
         
         
-        public function getAllCustomerDiscounts() 
-	{       
-
-
+  public function getAllCustomerDiscounts(){
             
-		$myQuery ='SELECT customer_discount.*, customers.name as customer_name, products.name as product_name
-                       FROM customer_discount
-                       LEFT JOIN customers ON customers.id=customer_discount.customer_id
-                       LEFT JOIN products ON products.id=customer_discount.product_id';  
+		$myQuery ="SELECT
+    `customer_discount`.`*`,
+    `customers`.`name` as `customer_name`,
+    `products`.`name` as `product_name`
+    FROM `customer_discount`
+    LEFT JOIN `customers` ON `customers`.`id`=`customer_discount`.`customer_id`
+    LEFT JOIN `products` ON `products`.`id`=`customer_discount`.`product_id`";  
                 
                 
-                $q = $this->db->query($myQuery, false); 
+    $q=$this->db->query($myQuery, FALSE); 
                 
-		if($q->num_rows() > 0) {
-			foreach (($q->result()) as $row) {
+		if($q->num_rows()>0){
+
+			foreach($q->result() as $row){
+
 				$data[] = $row;
+
 			}
 				
 			return $data;
+
 		}
      
 	}
         
-        public function deleteCustomerDiscount($id)  
-	{
+  public function deleteCustomerDiscount($id){            
             
-            
-		if($this->db->delete('customer_discount', array('customer_discount_id' => $id))) { 
-			return true;
-		}
-	return FALSE;
-	}
-        
-        
-        
-        public function getCustomerDiscountByID($id)  
-	{ 
-            
-            
-            $myQuery ="SELECT customer_discount.*, customers.name as customer_name, products.name as product_name
-                       FROM customer_discount
-                       LEFT JOIN customers ON customers.id=customer_discount.customer_id
-                       LEFT JOIN products ON products.id=customer_discount.product_id
-                       WHERE customer_discount.customer_discount_id = $id ";  
-            
-            $q = $this->db->query($myQuery, false); 
-            
-		//$q = $this->db->get_where('customer_discount', array('customer_discount_id' => $id), 1); 
-                
-		  if( $q->num_rows() > 0 )
-		  {
-			return $q->row();
-		  } 
-		
-		  return FALSE;
+	 if($this->db->delete('customer_discount', array('customer_discount_id' => $id))) return true;
+	 return FALSE;
 
 	}
         
         
-        public function updateCustomerDiscount($id, $data = array())
-	{ 
+        
+  public function getCustomerDiscountByID($id){            
+            
+    $myQuery ="SELECT
+    customer_discount.*,
+    customers.name as customer_name,
+    products.name as product_name
+    FROM customer_discount
+    LEFT JOIN customers ON customers.id=customer_discount.customer_id
+    LEFT JOIN products ON products.id=customer_discount.product_id
+    WHERE customer_discount.customer_discount_id='$id'";  
+            
+    $q = $this->db->query($myQuery, false); 
+            
+		//$q = $this->db->get_where('customer_discount', array('customer_discount_id' => $id), 1); 
+                
+		if($q->num_rows()>0) return $q->row();
+
+		return FALSE;
+
+	}
+        
+        
+  public function updateCustomerDiscount($id, $data=array()){ 
 		
 		$discountData = array(
-				'customer_id'	     	=> $data['customer_id'],
-                                'product_id'	     	=> $data['product_id'],
-				'discount_amount' 	=> $data['discount'],
-				'discount_type' 	=> $data['type'] 
-			);
-                
-                //echo $id; exit; 
-               // print_r($discountData);exit; 
+			'customer_id'=>$data['customer_id'],
+      'product_id'=>$data['product_id'],
+			'discount_amount'=>$data['discount'],
+			'discount_type'=>$data['type'] 
+		);
 			
 		$this->db->where('customer_id', $data['customer_id']);
-		$this->db->where('product_id', $data['product_id']); 
-		if($this->db->update('customer_discount', $discountData)) {
-			return true;
-		} else {
-			return false;
-		}
+		$this->db->where('product_id', $data['product_id']);
+
+		if($this->db->update('customer_discount', $discountData)) return TRUE;
+
+		else return FALSE;
+
 	}
         
         
@@ -252,20 +257,25 @@ class Discount_model extends CI_Model
            
            
            
-       public function getAllCustomerBalance()   
-	{       
-		$myQuery ='SELECT customer_balance.*, customers.name as customer_name
-                       FROM customer_balance
-                       LEFT JOIN customers ON customers.id=customer_balance.customer_id 
-                       ORDER BY customer_balance.customer_balance_id DESC
-                ';  
-                $q = $this->db->query($myQuery, false); 
-		if($q->num_rows() > 0) {
-			foreach (($q->result()) as $row) {
-				$data[] = $row;
-			}
+  public function getAllCustomerBalance(){
+
+		$query ="SELECT
+      `customer_balance`.`*`,
+      `customers`.`name` as `customer_name`
+      FROM `customer_balance`
+      LEFT JOIN `customers` ON `customers`.`id`=`customer_balance`.`customer_id`
+      ORDER BY `customer_balance`.`customer_balance_id` DESC";
+
+    $result=$this->db->query($query, FALSE);
+
+		if($result->num_rows()>0){
+
+			foreach($result->result() as $row) $data[] = $row;
+
 			return $data;
+
 		}
+
 	}   
            
   
@@ -429,83 +439,109 @@ class Discount_model extends CI_Model
         
        
        
-        public function insertCustomerBalance($data)
-	{ 
-            $customer_id=$data['customer_id'];
-            $typeOfAction=$data['action_type'];
-            $cusLatestBill = $this->discount_model->getCustomerLatestBill($customer_id);      
-            $cus_latest_bill=$cusLatestBill->total_balance; 
-            $current_balance= $cus_latest_bill - $data['payment'];
-            $dateOfupdate= date("d/m/Y"); 
+  public function insertCustomerBalance($data){
+
+    $customer_id=$data['customer_id'];
+    $typeOfAction=$data['action_type'];
+    $cusLatestBill =$this->discount_model->getCustomerLatestBill($customer_id);
+    $cus_latest_bill=$cusLatestBill->total_balance;
+    $current_balance= $cus_latest_bill - $data['payment'];
+    $dateOfupdate= date("d/m/Y");            
             
-            
-                   if($typeOfAction=='payment_in'){  
+    if($typeOfAction=='payment_in'){
+
+      if(isset($data['less_amount']) && $data['less_amount']){
+        $current_balance-=$data['less_amount'];
+      }
                        
 			$discountData = array(
-				'customer_id'	     	=> $data['customer_id'],
-				'action_type' 	        => 'Payment In',
-                                'commence_date'         => $data['commence_date'],
-                                'payment'	     	=> $data['payment'],
-                                'latest_payment'	=> $data['payment'],
-                                'paid_by'               => $data['paid_by'],
-                                'total_balance'         => $current_balance,
-                                'pre_balance'           => $cus_latest_bill,
-                                'note'                  => $data['note'],
-                                'date'                  => $dateOfupdate
+				'customer_id'=>$data['customer_id'],
+				'action_type'=>'Payment In',
+        'commence_date'=>$data['commence_date'],
+        'payment'=>$data['payment'],
+        'latest_payment'=> $data['payment'],
+        'paid_by'=> $data['paid_by'],
+        'total_balance'=>$current_balance,
+        'pre_balance'=> $cus_latest_bill,
+        'note'=>$data['note'],
+        'date'=>$dateOfupdate,
+        'update_date'=>$dateOfupdate
 			);
-                   }elseif($typeOfAction =='deduct_amount') {
-                       
-                       $current_balanceFor_deduct= $cus_latest_bill - $data['payment'];      
-                       
-                        	$discountData = array(
-				'customer_id'	     	=> $data['customer_id'],
-				'action_type' 	        => 'Deduct Balance',
-                                'less'	     	        => $data['payment'], 
-                                'total_balance'         => $current_balanceFor_deduct, 
-                                'pre_balance'           => $cus_latest_bill,
-                                'note'                  => $data['note'],
-                                'date'                  => $dateOfupdate
-			); 
-                   }else{
-                     
-                         $current_balanceFor_charge = $cus_latest_bill + $data['payment']; 
-                       	$discountData = array(
-                            
-				'customer_id'	     	=> $data['customer_id'], 
-				'action_type' 	        => 'Charge Added', 
-                                'charge'	        => $data['payment'],
-                                'total_balance'         => $current_balanceFor_charge, 
-                                'pre_balance'           => $cus_latest_bill,
-                                'note'                  => $data['note'],
-                                'date'                  => $dateOfupdate
-			);
-                       
-                   }
 
-		if($this->db->insert('transaction_history', $discountData)) {
-                    
-                     $cusLatestSalData=$this->discount_model->getCustomerLatestSaleID($customer_id);
-                     $curLatestPayment=$cusLatestSalData->latest_payment;
-                     $newLatestPayment=$data['payment'] + $curLatestPayment;  
+      if(isset($data['less_amount']) && $data['less_amount']){
+        $discountData['less']=$data['less_amount'];
+      }
+
+    }elseif($typeOfAction =='deduct_amount'){
+                       
+      $current_balanceFor_deduct=$cus_latest_bill-$data['payment'];      
+                       
+      $discountData = array(
+				'customer_id'=>$data['customer_id'],
+				'action_type'=>'Deduct Balance',
+        'less'=>$data['payment'],
+        'latest_payment'=>0.00,
+        'paid_by'=>'None',
+        'total_balance'=>$current_balanceFor_deduct, 
+        'pre_balance'=> $cus_latest_bill,
+        'note'=>$data['note'],
+        'date'=> $dateOfupdate,
+        'update_date'=>$dateOfupdate
+			); 
+                   
+    }else{
                      
-                     $transidOfLatestInvoice=$cusLatestSalData->transaction_history_id;  
-                     $paymentDataForInvoice = array(
+      $current_balanceFor_charge = $cus_latest_bill + $data['payment'];
+
+      $discountData = array(                            
+				'customer_id'=>$data['customer_id'], 
+				'action_type' =>'Charge Added', 
+        'charge'=>$data['payment'],
+        'latest_payment'=>0.00,
+        'paid_by'=>'None',
+        'total_balance'=>$current_balanceFor_charge, 
+        'pre_balance'=> $cus_latest_bill,
+        'note'=> $data['note'],
+        'date'=> $dateOfupdate,
+        'update_date'=>$dateOfupdate
+			);
+                       
+    }
+
+		if($this->db->insert('transaction_history', $discountData)){
+                    
+      $cusLatestSalData=$this->discount_model->getCustomerLatestSaleID($customer_id);
+      $curLatestPayment=$cusLatestSalData->latest_payment;
+      $newLatestPayment=$data['payment'] + $curLatestPayment;                     
+      $transidOfLatestInvoice=$cusLatestSalData->transaction_history_id;  
+      
+      $paymentDataForInvoice = array(
 				'latest_payment'  => $newLatestPayment,   
 			);
-                     $this->db->update('transaction_history', $paymentDataForInvoice, array('transaction_history_id' => $transidOfLatestInvoice));
+      
+      $this->db->update(
+        'transaction_history',
+        $paymentDataForInvoice,
+        array('transaction_history_id' => $transidOfLatestInvoice)
+      );
                      
-                     $cusLatestBill = $this->discount_model->getCustomerLatestBill($customer_id);      
-                     $cus_latest_bill=$cusLatestBill->total_balance;            
+      $cusLatestBill = $this->discount_model->getCustomerLatestBill($customer_id);      
+      $cus_latest_bill=$cusLatestBill->total_balance;            
                      
-                     $balanceData = array(
+      $balanceData = array(
 				'total_balance_amount'  => $cus_latest_bill,   
 			);
-                     $this->db->update('customer_balance', $balanceData, array('customer_id' => $customer_id));
-                     
-			return true;     
-		} else {
-			return false;
-		}
+
+      $this->db->update('customer_balance', $balanceData, array('customer_id' => $customer_id));                    
+			return TRUE;
+
+		}else{
+
+      //var_dump($this->db->_error_message());die;
+      return FALSE;
+
+    }
+
 	}
             
    public function getCustomerLatestBill($custid) {     

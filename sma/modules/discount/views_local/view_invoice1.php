@@ -187,7 +187,7 @@ function printDiv(divName) {
         <div class="span12">  
             <div data-example-id="simple-pre">
                 <p>Terms & Condition :</p>  
-                <pre> *Please Report Any Damage Goods on Delivery To the Driver.<br> *Goods Remain Property of (Zilani) until Full Payment Has Been Received.<br>*Any cheque Dishonoured will Have a Charge of &pound;35.00 
+                <pre> *Please Report Any Damage Goods on Delivery To the Driver.<br> *Goods Remain Property of (Paplu Fresh Vegetables) until Full Payment Has Been Received.<br>*Any cheque Dishonoured will Have a Charge of &pound;35.00 
                 </pre>
             </div> 
         </div>

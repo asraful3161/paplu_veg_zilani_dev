@@ -22,11 +22,9 @@
 					  "sSearch": "Filter: "
 					},
 					"aoColumns": [ 
-					  { "bSortable": false },
 					  null,
 					  null,
-					  null,
-	
+					  null,	
 					  { "bSortable": false }
 					]
 					
@@ -35,8 +33,20 @@
             } );
                     
 </script>
-<?php if($message) { echo "<div class=\"alert alert-error\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>" . $message . "</div>"; } ?>
-<?php if($success_message) { echo "<div class=\"alert alert-success\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>" . $success_message . "</div>"; } ?>
+
+	<?php if($message): ?>
+		<div class="alert alert-error">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<?=$message?>
+		</div>
+	<?php endif ?>
+
+	<?php if($success_message): ?>
+		<div class="alert alert-success">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<?=$success_message?>
+		</div>
+	<?php endif ?>
 
 
 	<h3 class="title"><?php echo $page_title; ?></h3>
@@ -47,26 +57,32 @@
         <tr>
 			<th style="width:35px;"><?php echo $this->lang->line('no'); ?></th>
 			<th>Customer Name</th>
-                        <th>Current Balance</th>
-                         <th>Last Update</th> 
-                         <th>&nbsp;</th>
+            <th>Current Balance</th>
+            <th>Last Update</th> 
 		</tr>
         </thead>
 		<tbody>
 		<?php 
-		$r = 1;
-		foreach ($customer_balance as $row):?>
-			<tr>
-				<td><?php echo $r; ?></td>
-                                <td><?php echo $row->customer_name; ?></td>
-                                <td><?php echo $row->total_balance_amount; ?></td> 
-                                <td><?php echo $row->date; ?></td>
 
-                
-                                <td>&nbsp;</td>
+			foreach($customer_balance as $key=>$row):?>
+
+			<tr>
+				<td><?=($key+1)?></td>
+                <td>
+                	<?php if($row->customer_name): ?>
+                	<?=$row->customer_name?>
+                	<?php else: ?>
+                	<small><i>Not Specified</i></small>
+                	<?php endif ?>                		
+                </td>
+                <td><?=$row->total_balance_amount?></td> 
+                <td><?=$row->date?></td>
 			</tr>
             
-		<?php $r++; endforeach;?>
+		<?php
+			endforeach;
+		?>
+
         </tbody>
 	</table>
 	

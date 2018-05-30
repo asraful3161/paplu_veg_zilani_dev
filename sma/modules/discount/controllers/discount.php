@@ -225,13 +225,15 @@ class Discount extends MX_Controller
 
      */
 
-    function update_customer_balance()
-    {
+    function update_customer_balance(){
 
         $action_type = $this->input->post('action_type');
+        $insert_result=NULL;
 
-        if ($action_type == 'deduct_amount' || $action_type == 'add_charge') {
-            $this->form_validation->set_rules('note', Note, 'required|xss_clean');
+        if($action_type == 'deduct_amount' || $action_type == 'add_charge'){
+
+            $this->form_validation->set_rules('note', 'Note', 'required|xss_clean');
+
         }
 
 
@@ -240,8 +242,10 @@ class Discount extends MX_Controller
         $this->form_validation->set_rules('paid_by', $this->lang->line("paid_by"), 'required|xss_clean');
 
 
-        if ($this->form_validation->run() == true) {
-            $data = array('customer_id' => $this->input->post('customer_id'),
+        if($this->form_validation->run()==true){
+
+            $data = array(
+                'customer_id' => $this->input->post('customer_id'),
                 'action_type' => $this->input->post('action_type'),
                 'commence_date' => $this->input->post('commence_date'),
                 'payment' => $this->input->post('amount'),
@@ -249,20 +253,26 @@ class Discount extends MX_Controller
                 'note' => $this->input->post('note'),
             );
 
-            $insert_result = $this->discount_model->insertCustomerBalance($data);
+            if($this->input->post('less_amount')) $data['less_amount']=$this->input->post('less_amount');
+
+            $insert_result=$this->discount_model->insertCustomerBalance($data);
+            //var_dump($insert_result);die;
+
         }
 
+        if($insert_result && $this->discount_model->updateCustomerBalance($data)){
 
-
-
-        if ($this->form_validation->run() == true && $this->discount_model->updateCustomerBalance($data)) { //check to see if we are creating the customer
+            //check to see if we are creating the customer
             //redirect them back to the admin page
             $this->session->set_flashdata('success_message', 'Balance Update Successful.');
             //redirect("module=discount&view=list_customer_balance", 'refresh'); 
             redirect("module=discount&view=customer_transaction_history", 'refresh');
-        } else { //display the create customer form
+
+        }else{
+
+            //display the create customer form
             //set the flash data error message if there is one
-            $data['message'] = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
+            $data['message'] = validation_errors()?validation_errors():$this->session->flashdata('message');
 
             $data['customer'] = array('name' => 'customer',
                 'id' => 'customer',
@@ -284,33 +294,30 @@ class Discount extends MX_Controller
             $meta['page_title'] = 'Customer Balance';
             $data['page_title'] = 'Customer Balance';
 
-            redirect('module=discount&view=customer_transaction_history', $meta, $data);
+            //redirect('module=discount&view=customer_transaction_history');
 
 
-            //$this->load->view('commons/header', $meta);
-            //$this->load->view('update_customer_balance', $data);
-            //$this->load->view('commons/footer');
+            $this->load->view('commons/header', $meta);
+            $this->load->view('update_customer_balance', $data);
+            $this->load->view('commons/footer');
+
         }
     }
 
-    function list_customer_balance()
-    {
+    function list_customer_balance(){
 
-        //echo $result = rand(485000000000, 485999999999); exit;           
+        $data['message']=validation_errors()?validation_errors():$this->session->flashdata('message');
 
-
-        $data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
         $data['success_message'] = $this->session->flashdata('success_message');
 
-        $data['customer_balance'] = $this->discount_model->getAllCustomerBalance()?$this->discount_model->getAllCustomerBalance():[];
-
-        //print_r($data['customer_balance']); exit;   
+        $data['customer_balance'] = $this->discount_model->getAllCustomerBalance()?$this->discount_model->getAllCustomerBalance():[]; 
 
         $meta['page_title'] = 'Customer Balance';
         $data['page_title'] = 'Customer Balance List';
         $this->load->view('commons/header', $meta);
         $this->load->view('customer_balance', $data);
         $this->load->view('commons/footer');
+
     }
 
     function delete_balance($id = NULL)
