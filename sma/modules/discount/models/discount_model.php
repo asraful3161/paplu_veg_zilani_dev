@@ -89,12 +89,12 @@ class Discount_model extends CI_Model{
   public function getAllCustomerDiscounts(){
             
 		$myQuery ="SELECT
-    `customer_discount`.`*`,
-    `customers`.`name` as `customer_name`,
-    `products`.`name` as `product_name`
-    FROM `customer_discount`
-    LEFT JOIN `customers` ON `customers`.`id`=`customer_discount`.`customer_id`
-    LEFT JOIN `products` ON `products`.`id`=`customer_discount`.`product_id`";  
+    customer_discount.*,
+    customers.name as customer_name,
+    products.name as product_name
+    FROM customer_discount
+    LEFT JOIN customers ON customers.id=customer_discount.customer_id
+    LEFT JOIN products ON products.id=customer_discount.product_id";  
                 
                 
     $q=$this->db->query($myQuery, FALSE); 
@@ -260,11 +260,11 @@ class Discount_model extends CI_Model{
   public function getAllCustomerBalance(){
 
 		$query ="SELECT
-      `customer_balance`.`*`,
-      `customers`.`name` as `customer_name`
-      FROM `customer_balance`
-      LEFT JOIN `customers` ON `customers`.`id`=`customer_balance`.`customer_id`
-      ORDER BY `customer_balance`.`customer_balance_id` DESC";
+      customer_balance.*,
+      customers.name as customer_name
+      FROM customer_balance
+      LEFT JOIN customers ON customers.id=customer_balance.customer_id
+      ORDER BY customer_balance.customer_balance_id DESC";
 
     $result=$this->db->query($query, FALSE);
 
