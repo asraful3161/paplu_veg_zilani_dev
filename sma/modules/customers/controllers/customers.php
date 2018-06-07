@@ -408,26 +408,22 @@ class Customers extends MX_Controller {
 		return $q;
 	}
 	
-	function suggestions()
-	{
+	function suggestions(){
+
 		$term = $this->input->get('term',TRUE);
 	
-		if (strlen($term) < 2) break;
+		if(strlen($term)<2) die;
 	
 		$rows = $this->customers_model->getCustomerNames($term); 
-                //var_dump($rows); exit;
-                foreach ($rows as $row) {
-                    //$json_decoded = json_decode($row);
-                    $json_array[]= array('label' =>$row->name,'id' =>$row->id); 
-                }
-                
-//		foreach ($rows as $row)
-//			 array_push($json_array[0], $row->name);
-//			 array_push($json_array[1], $row->id);
-//                         print_r(json_encode($json_array));	
-//                        exit();      
+
+        //var_dump($rows); exit;
+        foreach ($rows as $row) {
+            //$json_decoded = json_decode($row);
+            $json_array[]= array('label' =>$row->name,'id' =>$row->id); 
+        }               
                          
-		echo json_encode($json_array); 
+		die(json_encode($json_array));
+		 
 	}
 	
 	
