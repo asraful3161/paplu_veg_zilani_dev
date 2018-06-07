@@ -21,7 +21,7 @@ if($this->input->post('submit')){
 
 ?>
 
-<script src="<?=base_url()?>assets/media/js/jquery.dataTables.columnFilter.js" type="text/javascript">
+<script src="<?=base_url('assets/media/js/jquery.dataTables.columnFilter.js')?>" type="text/javascript">
 </script>
 
 <style type="text/css">
@@ -72,7 +72,7 @@ if($this->input->post('submit')){
 </style>
 
 <link href="<?=$this->config->base_url()?>assets/css/datepicker.css" rel="stylesheet">
-<script src="<?=$this->config->base_url()?>assets/js/query-ui.js"></script>
+<script src="<?=$this->config->base_url()?>assets/js/jquery-ui.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function(){

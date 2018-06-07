@@ -16,7 +16,7 @@ if($this->input->post('submit')){
 
 ?>
 
-<script src="<?=base_url()?>" type="text/javascript">
+<script src="<?=base_url('assets/media/js/jquery.dataTables.columnFilter.js')?>" type="text/javascript">
 </script>
 
 <style type="text/css">
@@ -69,7 +69,7 @@ if($this->input->post('submit')){
 </style>
 
 <link href="<?=$this->config->base_url()?>assets/css/datepicker.css" rel="stylesheet">
-<script src="<?=$this->config->base_url()?>assets/js/query-ui.js"></script>
+<script src="<?=$this->config->base_url()?>assets/js/jquery-ui.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -114,7 +114,7 @@ if($this->input->post('submit')){
 			if($this->input->post('submit')){echo $v;}?>",
 			'fnServerData': function(sSource, aoData, fnCallback, fnFooterCallback){
 
-				aoData.push( { "name": "<?php echo $this->security->get_csrf_token_name(); ?>", "value": "<?php echo $this->security->get_csrf_hash() ?>" } );
+				aoData.push( { "name": "<?=$this->security->get_csrf_token_name()?>", "value": "<?=$this->security->get_csrf_hash()?>" } );
 
 				$.ajax({
 
@@ -189,7 +189,7 @@ if($this->input->post('submit')){
 
 		} ).columnFilter({ aoColumns: [
 
-			{ type: "text", bRegex:true },
+			{ type: "date", bRegex:true },
 			{ type: "text", bRegex:true },
 			null,
 			null,
@@ -292,7 +292,7 @@ if($this->input->post('submit')){
         <tfoot>
 
         <tr>
-        	<th>[<?php echo $this->lang->line("date"); ?>]</th>
+        	<th>[<?=$this->lang->line("date")?>]</th>
             <th>[<?=$this->lang->line("customer")?>]</th>
             <th><?=$this->lang->line("invoice_amount")?></th>
             <th><?=$this->lang->line("less_amount")?></th>
