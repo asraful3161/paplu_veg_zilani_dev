@@ -7,16 +7,20 @@ class MY_Lang extends CI_Lang{
         parent::__construct();
     }
 
-    function line($line, $params=null){
+    function line($line='', $params=null){
 
         $return = parent::line($line);
             
-        if($return === false){
+        if($return===false){
+
             return "<em>$line</em>";
+
         }else{
-            if (!is_null($params)){
+
+            if(!is_null($params)){
                 $return = $this->_ni_line($return, $params); 
             }
+
             return $return;
         }
 

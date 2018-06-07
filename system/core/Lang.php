@@ -140,7 +140,7 @@ class CI_Lang {
 	 * @param	string	$line	the language line
 	 * @return	string
 	 */
-	function line($line = '')
+	function line($line = '', $params=null)
 	{
 		$value = ($line == '' OR ! isset($this->language[$line])) ? FALSE : $this->language[$line];
 
