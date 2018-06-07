@@ -140,7 +140,7 @@
                     });
                     
                     
-                     $("#action_type").change(function() {
+                     /*$("#action_type").change(function() {
                         var a_val = $(this).val();
                         if (a_val == 'payment_in') {
                             $('.commence_date').show();
@@ -151,6 +151,55 @@
                         } else if (a_val == 'add_charge') {
                             $('.commence_date').hide();
                             $('#paid_by').hide(); 
+                        } 
+                        
+                    });*/
+
+                  var action_type=$("#action_type").val();
+
+                  if(action_type=='payment_in'){
+
+                        $('.commence_date').show();
+                        $('#paid_by').show();
+                        $('#div_less_amount').show();
+
+                    }else if(action_type=='deduct_amount'){
+
+                        $('.commence_date').hide(); 
+                        $('#paid_by').hide();
+                        $('#div_less_amount').hide();
+
+                    }else if(action_type == 'add_charge'){
+
+                        $('.commence_date').hide();
+                        $('#paid_by').hide();
+                        $('#div_less_amount').hide();
+
+                    }
+                    
+                    
+                     $("#action_type").change(function(){
+
+                        var action_type=$(this).val();
+
+                        if(action_type=='payment_in'){
+
+                            $('.commence_date').show();
+                            $('#paid_by').show();
+                            $('#div_less_amount').show();
+
+                        } else if(action_type=='deduct_amount'){
+
+                            $('.commence_date').hide(); 
+                            $('#paid_by').hide();
+                            $('#div_less_amount').hide();
+
+                        } else if(action_type=='add_charge'){
+
+                            $('.commence_date').hide();
+                            $('#paid_by').hide();
+                            $('#div_less_amount').hide();
+
                         } 
                         
                     });
@@ -315,6 +364,13 @@
              <input type="text" class="" name="amount" id="amount">
                    </div>
            </div>
+
+            <div class="control-group" id='div_less_amount'>
+              <label class="control-label" for="less_amount">Less Amount</label>
+              <div class="controls">
+                <?=form_input('less_amount', set_value('less_amount'), "placeholder='Enter Less Amount' class='span4' id='less_amount'"); ?>
+              </div>
+            </div>
 
            <div id="paid_by" class="control-group">
                <label class="control-label" for="paid_by">Paid By</label>
