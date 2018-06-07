@@ -189,7 +189,7 @@ if($this->input->post('submit')){
 
 		} ).columnFilter({ aoColumns: [
 
-			{ type: "date", bRegex:true },
+			{ type: "text", bRegex:true },
 			{ type: "text", bRegex:true },
 			null,
 			null,
