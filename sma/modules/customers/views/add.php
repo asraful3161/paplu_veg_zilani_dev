@@ -5,8 +5,6 @@ $(function() {
 });
 </script>
 
-<?php var_dump($message); ?>
-
 <?php if($message) { echo "<div class=\"alert alert-error\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>" . $message . "</div>"; } ?>
 
 
