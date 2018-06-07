@@ -110,8 +110,7 @@ if($this->input->post('submit')){
 			//"iDisplayLength": <?=ROWS_PER_PAGE?>,
 			'bProcessing'    : true,
 			'bServerSide'    : true,
-			'sAjaxSource'    : "<?=base_url()?>index.php?module=reports&view=get_outstanding_sales<?php 
-			if($this->input->post('submit')){echo $v;}?>",
+			'sAjaxSource'    : "<?=base_url('index.php?module=reports&view=get_outstanding_sales'.($this->input->post('submit')?$v:''))?>",
 			'fnServerData': function(sSource, aoData, fnCallback, fnFooterCallback){
 
 				aoData.push( { "name": "<?=$this->security->get_csrf_token_name()?>", "value": "<?=$this->security->get_csrf_hash()?>" } );
@@ -170,11 +169,11 @@ if($this->input->post('submit')){
 					}
 					
 					if(aaData[aiDisplay[i]][4]){
-						paid_amount+= parseFloat(aaData[aiDisplay[i]][5]);
+						paid_amount+= parseFloat(aaData[aiDisplay[i]][4]);
 					}
 					
 					if(aaData[aiDisplay[i]][5]){
-						outstanding_amount+= parseFloat(aaData[aiDisplay[i]][6]);
+						outstanding_amount+= parseFloat(aaData[aiDisplay[i]][5]);
 					}
 
 				}
@@ -189,7 +188,7 @@ if($this->input->post('submit')){
 
 		} ).columnFilter({ aoColumns: [
 
-			{ type: "text", bRegex:true },
+			null,
 			{ type: "text", bRegex:true },
 			null,
 			null,
@@ -292,14 +291,14 @@ if($this->input->post('submit')){
         <tfoot>
 
         <tr>
-        	<th>[<?=$this->lang->line("date")?>]</th>
+        	<th><?=$this->lang->line("date")?></th>
             <th>[<?=$this->lang->line("customer")?>]</th>
             <th><?=$this->lang->line("invoice_amount")?></th>
             <th><?=$this->lang->line("less_amount")?></th>
             <th><?=$this->lang->line("paid_amount")?></th>
             <th><?=$this->lang->line("outstanding_amount")?></th>
-	</tr>
-	</tfoot>
+		</tr>
+		</tfoot>
 	</table>
 
 <?php } ?>
